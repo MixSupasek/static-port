@@ -48,9 +48,9 @@ test('portrait loads alongside the resume heading', async ({ page }) => {
 test('resume sections follow one column in reading order', async ({ page }) => {
   await page.goto('/');
   const sections = page.locator('.resume-body > section');
-  await expect(sections).toHaveCount(5);
+  await expect(sections).toHaveCount(6);
   expect(await sections.evaluateAll(nodes => nodes.map(node => node.getAttribute('aria-labelledby'))))
-    .toEqual(['profile', 'education', 'skills', 'projects', 'credentials']);
+    .toEqual(['profile', 'education', 'skills', 'projects', 'credentials', 'languages']);
   const bounds = await sections.evaluateAll(nodes => nodes.map(node => {
     const { x, y, width, bottom } = node.getBoundingClientRect();
     return { x, y, width, bottom };

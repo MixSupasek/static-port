@@ -54,8 +54,8 @@
     .skill-groups dd { margin: 0; }
     .skill-groups dt { font-weight: 700; }
     .project-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 12px; }
-    .project-summary, .credentials { margin: 6px 0 0; padding-inline-start: 1.25em; }
-    .project-summary li + li, .credentials li + li { margin-top: 4px; }
+    .project-summary, .credentials, .spoken-languages { margin: 6px 0 0; padding-inline-start: 1.25em; }
+    .project-summary li + li, .credentials li + li, .spoken-languages li + li { margin-top: 4px; }
     .project-summary + .project-heading { margin-top: 11px; }
     a { color: inherit; text-underline-offset: 2px; }
 
@@ -70,13 +70,15 @@
     @page { size: A4; margin: 12mm 13mm; }
 
     @media print {
-      :root { background: white; font-size: 9.5pt; line-height: 1.35; }
+      :root { background: white; font-size: 9.5pt; line-height: 1.3; }
       h1 { font-size: 25pt; }
       .resume { margin: 0; max-width: none; padding: 0; box-shadow: none; }
       .resume-header { grid-template-columns: 22mm minmax(0, 1fr) 22mm; padding-bottom: 10px; }
-      .resume-body > section { padding-top: 7px; }
-      section + section { margin-top: 9px; }
-      .project-summary + .project-heading { margin-top: 8px; }
+      .resume-body > section { padding-top: 5px; }
+      h2 { margin-bottom: 5px; }
+      section + section { margin-top: 6px; }
+      .project-summary + .project-heading { margin-top: 6px; }
+      .project-summary li + li, .credentials li + li, .spoken-languages li + li { margin-top: 2px; }
       header, section { break-inside: avoid; }
     }
   </style>
@@ -172,6 +174,13 @@
           <li>AWS Academy Cloud Architecting</li>
         </ul>
       </section>
+        <section aria-labelledby="languages">
+          <h2 id="languages">ภาษา</h2>
+          <ul class="spoken-languages">
+            <li>ภาษาไทย — เจ้าของภาษา (Native)</li>
+            <li>ภาษาอังกฤษ — ปานกลาง</li>
+          </ul>
+        </section>
     </div>
   </main>
 </body>
