@@ -1,6 +1,6 @@
 # Static Portfolio CI/CD on AWS S3
 
-เว็บเรซูเม่ภาษาไทยของ ศุภเสก สังเกตุ สำหรับฝึกทำ CI/CD ตั้งแต่การทดสอบบนเบราว์เซอร์ การ deploy ไปยัง AWS S3 ไปจนถึงการย้อนกลับไปใช้ release ที่เคยผ่านการทดสอบแล้ว
+เว็บเรซูเม่ภาษาอังกฤษของ Supasek Sangket สำหรับฝึกทำ CI/CD ตั้งแต่การทดสอบบนเบราว์เซอร์ การ deploy ไปยัง AWS S3 ไปจนถึงการย้อนกลับไปใช้ release ที่เคยผ่านการทดสอบแล้ว
 
 [เปิดเว็บไซต์](http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com/) · [ดูเวอร์ชันบนเว็บ](http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com/version.json) · [ดู GitHub Actions](https://github.com/MixSupasek/static-port/actions)
 
