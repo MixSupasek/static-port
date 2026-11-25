@@ -1,6 +1,6 @@
 # Static Portfolio CI/CD on AWS S3
 
-เว็บเรซูเม่ภาษาไทยของ Supasek Sangket สำหรับฝึกทำ CI/CD ตั้งแต่การทดสอบบนเบราว์เซอร์ การ deploy ไปยัง AWS S3 ไปจนถึงการย้อนกลับไปใช้ release ที่เคยผ่านการทดสอบแล้ว
+เว็บเรซูเม่ภาษาไทยของ ศุภเสก สังเกตุ สำหรับฝึกทำ CI/CD ตั้งแต่การทดสอบบนเบราว์เซอร์ การ deploy ไปยัง AWS S3 ไปจนถึงการย้อนกลับไปใช้ release ที่เคยผ่านการทดสอบแล้ว
 
 [เปิดเว็บไซต์](http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com/) · [ดูเวอร์ชันบนเว็บ](http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com/version.json) · [ดู GitHub Actions](https://github.com/MixSupasek/static-port/actions)
 
@@ -42,7 +42,7 @@ package.json                  คำสั่ง npm และเลขเวอ
 package-lock.json             เวอร์ชัน dependency สำหรับ npm ci
 scripts/build.mjs             สร้างไฟล์เว็บไซต์และ version.json
 playwright.config.js          ตั้งค่าเบราว์เซอร์ ขนาดหน้าจอ และ local server
-tests/portfolio.spec.js       ทดสอบเว็บไซต์ 5 เรื่องบน 2 ขนาดหน้าจอ
+tests/portfolio.spec.js       ทดสอบเว็บไซต์ 6 เรื่องบน 2 ขนาดหน้าจอ
 .github/workflows/ci.yml      Build, test และ deploy
 .github/workflows/rollback.yml เรียกคืน release จาก S3
 ```
@@ -67,7 +67,7 @@ npm start
 
 ## Automated testing
 
-`npm test` รัน 5 เคสบน desktop และ mobile รวม 10 เคส
+`npm test` รัน 6 เคสบน desktop และ mobile รวม 12 เคส
 
 | เคส | สิ่งที่ตรวจ |
 | --- | --- |
@@ -75,6 +75,7 @@ npm start
 | ลิงก์ | อีเมลและโทรศัพท์ตรงกับข้อมูลติดต่อ พร้อมตรวจรูปแบบ URL ของ GitHub repository |
 | Responsive layout | ความกว้างเนื้อหาพอดี viewport โดยไม่มี horizontal overflow |
 | รูปถ่าย | โหลดรูปสำเร็จและแสดงทางขวาของชื่อบนทั้งสองขนาดหน้าจอ |
+| ลำดับเนื้อหา | ส่วนเกี่ยวกับฉัน การศึกษา ทักษะ โปรเจกต์ และใบรับรองเรียงในคอลัมน์เดียว |
 | ข้อมูล release | `/version.json` ระบุ commit ที่ใช้ build เลขเวอร์ชัน และวันที่ build ที่อ่านได้ |
 
 ผลการทดสอบแสดงใน terminal และ HTML report เปิดได้ด้วย `npx playwright show-report`
@@ -112,7 +113,7 @@ Workflow `Portfolio CI/CD` เริ่มเมื่อ push เข้า `mai
 
 1. ติดตั้ง dependency จาก lockfile ด้วย `npm ci`
 2. Build `dist/index.html` และ `dist/version.json`
-3. รัน Playwright ทั้ง 10 เคส
+3. รัน Playwright ทั้ง 12 เคส
 4. เก็บ artifact ชื่อ `website-<commit SHA>` หลังทดสอบผ่าน และเก็บ HTML test report ไว้ 7 วัน
 5. สำหรับ push หรือ Run workflow บน `main` ให้ deploy job ดาวน์โหลด artifact จาก run เดียวกัน
 6. ตรวจว่า commit ที่กำลัง deploy ยังเป็น commit ล่าสุดของ `main`
