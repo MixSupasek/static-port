@@ -4,7 +4,10 @@ import { execFileSync } from 'node:child_process';
 test('homepage serves the portfolio and all four projects', async ({ page }) => {
   const response = await page.goto('/');
   expect(response.status()).toBe(200);
-  await expect(page.getByRole('heading', { level: 1, name: 'ศุภเสก สังเกตุ' })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.getByRole('heading', { level: 1, name: 'Supasek Sangket' })).toBeVisible();
+  await expect(page.getByText('Thai — Native', { exact: true })).toBeVisible();
+  await expect(page.getByText('English — Intermediate', { exact: true })).toBeVisible();
   for (const name of ['Static Website CI/CD on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest']) {
     await expect(page.getByRole('heading', { level: 3, name, exact: true })).toBeVisible();
   }
@@ -37,7 +40,7 @@ test('page fits the viewport without horizontal scrolling', async ({ page }) => 
 
 test('portrait loads alongside the resume heading', async ({ page }) => {
   await page.goto('/');
-  const portrait = page.getByRole('img', { name: 'ศุภเสก สังเกตุ', exact: true });
+  const portrait = page.getByRole('img', { name: 'Supasek Sangket', exact: true });
   await expect(portrait).toBeVisible();
   expect(await portrait.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
   const photoBounds = await portrait.boundingBox();
