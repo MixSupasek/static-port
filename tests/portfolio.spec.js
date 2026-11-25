@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
 
-test('homepage serves the portfolio and all four projects', async ({ page }) => {
+test('homepage serves the portfolio and all five projects', async ({ page }) => {
   const response = await page.goto('/');
   expect(response.status()).toBe(200);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.getByRole('heading', { level: 1, name: 'Supasek Sangket' })).toBeVisible();
   await expect(page.getByText('Thai — Native', { exact: true })).toBeVisible();
   await expect(page.getByText('English — Intermediate', { exact: true })).toBeVisible();
-  for (const name of ['Static Website CI/CD on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest']) {
+  for (const name of ['Static Website CI/CD on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest', 'Football Player Market Value Data Warehouse']) {
     await expect(page.getByRole('heading', { level: 3, name, exact: true })).toBeVisible();
   }
 });
@@ -19,7 +19,9 @@ test('contact and project links point to usable destinations', async ({ page }) 
     .toHaveAttribute('href', 'mailto:mix.supasek@gmail.com');
   await expect(page.getByRole('link', { name: '0954847401' }))
     .toHaveAttribute('href', 'tel:+66954847401');
-  const projectLinks = page.locator('.project-heading a');
+  await expect(page.getByRole('link', { name: 'Presentation', exact: true }))
+    .toHaveAttribute('href', 'https://www.youtube.com/watch?v=aACfBl-uUSw');
+  const projectLinks = page.locator('.project-heading a[href^="https://github.com/"]');
   await expect(projectLinks).toHaveCount(5);
   for (const link of await projectLinks.all()) {
     const destination = new URL(await link.getAttribute('href'));
