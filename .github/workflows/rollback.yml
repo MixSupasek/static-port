@@ -1,0 +1,57 @@
+name: Rollback portfolio
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Full commit SHA of a previously deployed release
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  rollback:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: portfolio-production
+      cancel-in-progress: false
+    env:
+      RELEASE_REVISION: ${{ inputs.revision }}
+      AWS_REGION: ap-southeast-2
+      S3_BUCKET: supasek-portfolio-001-461899883996-ap-southeast-2-an
+      WEBSITE_URL: http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com
+    steps:
+      - name: Validate release revision
+        run: |
+          if [[ ! "$RELEASE_REVISION" =~ ^[a-f0-9]{40}$ ]]; then
+            echo 'Enter the full 40-character commit SHA of a previously deployed release.'
+            exit 1
+          fi
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Download and validate the saved release
+        run: |
+          mkdir -p dist
+          aws s3 cp "s3://$S3_BUCKET/releases/$RELEASE_REVISION/index.html" dist/index.html --only-show-errors
+          aws s3 cp "s3://$S3_BUCKET/releases/$RELEASE_REVISION/version.json" dist/version.json --only-show-errors
+          jq --exit-status --arg revision "$RELEASE_REVISION" '.revision == $revision' dist/version.json
+          test -s dist/index.html
+      - name: Restore saved release
+        run: |
+          aws s3 cp dist/index.html "s3://$S3_BUCKET/index.html" --content-type 'text/html; charset=utf-8' --cache-control no-store --only-show-errors
+          aws s3 cp dist/version.json "s3://$S3_BUCKET/version.json" --content-type application/json --cache-control no-store --only-show-errors
+      - name: Verify public website matches restored release
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --connect-timeout 10 --max-time 20 "$WEBSITE_URL/index.html" -o /tmp/deployed-index.html
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --connect-timeout 10 --max-time 20 "$WEBSITE_URL/version.json" -o /tmp/deployed-version.json
+          cmp dist/index.html /tmp/deployed-index.html
+          cmp dist/version.json /tmp/deployed-version.json
+          echo "Restored $RELEASE_REVISION to $WEBSITE_URL" >> "$GITHUB_STEP_SUMMARY"
