@@ -66,9 +66,14 @@
     @page { size: A4; margin: 12mm 13mm; }
 
     @media print {
-      :root { background: white; font-size: 10.5pt; }
-      h1 { font-size: 30pt; }
+      :root { background: white; font-size: 9.5pt; line-height: 1.35; }
+      h1 { font-size: 25pt; }
       .resume { margin: 0; max-width: none; padding: 0; box-shadow: none; }
+      .resume-header { padding-bottom: 12px; }
+      .resume-body { margin-top: 10px; }
+      .primary { padding-top: 8px; }
+      section + section { margin-top: 12px; }
+      .project-summary + .project-heading { margin-top: 10px; }
       .sidebar { print-color-adjust: exact; }
       header, section { break-inside: avoid; }
     }
@@ -101,6 +106,16 @@
 
         <section aria-labelledby="projects">
           <h2 id="projects">โครงการที่เคยพัฒนา</h2>
+          <div class="project-heading">
+            <h3>Static Website CI/CD on AWS S3</h3>
+            <a href="https://github.com/MixSupasek/static-port">ดูโครงการบน GitHub</a>
+          </div>
+          <ul class="project-summary">
+            <li><strong>ภาพรวมโครงการ</strong> เว็บไซต์เรซูเม่บน AWS S3 พร้อมทดสอบ ดีพลอยอัตโนมัติ และย้อนกลับไปใช้ release ก่อนหน้า</li>
+            <li><strong>สิ่งที่ทำ</strong> สร้าง GitHub Actions pipeline รัน Playwright 8 เคสบนจอคอมและมือถือ จัดสิทธิ์ IAM และ GitHub Secrets เก็บ release ตาม commit SHA และทดลอง deploy กับ rollback จริง</li>
+            <li><strong>ทักษะที่ได้</strong> ใช้ S3 Static Website Hosting และ Versioning ทำ CI/CD ตรวจไฟล์หลัง deploy และกำหนด branch protection ให้ผ่าน CI ก่อน merge</li>
+          </ul>
+
           <div class="project-heading">
             <h3>GitOps Release Pipeline</h3>
             <a href="https://github.com/MixSupasek/gitops-release-pipeline">ดูโครงการบน GitHub</a>
@@ -150,9 +165,9 @@
             <dt>ภาษาที่เขียน</dt>
             <dd>Python, C, C++</dd>
             <dt>เครื่องมือ</dt>
-            <dd>Git, Docker, Docker Compose, Kubernetes, GitHub Actions, Argo CD, GitHub Container Registry, MySQL, MongoDB, React Native, Expo</dd>
+            <dd>Git, GitHub Actions, AWS S3, AWS IAM, AWS CLI, Playwright, Docker, Docker Compose, Kubernetes, Argo CD, GitHub Container Registry, MySQL, MongoDB, React Native, Expo</dd>
             <dt>ทักษะ</dt>
-            <dd>ทำ CI/CD อัตโนมัติ, ดีพลอยแบบ GitOps, ตรวจสอบความพร้อมของ API และย้อนเวอร์ชัน, ตั้งค่าฐานข้อมูลด้วย Docker Compose, พัฒนาและทดสอบแอปมือถือเบื้องต้น</dd>
+            <dd>CI/CD และ automated testing, ดีพลอยเว็บไซต์บน AWS S3, จัดสิทธิ์ IAM และ GitHub Secrets, release versioning และ rollback, branch protection, ดีพลอยแบบ GitOps, ตรวจสอบความพร้อมของ API, ตั้งค่าฐานข้อมูลด้วย Docker Compose, พัฒนาและทดสอบแอปมือถือเบื้องต้น</dd>
           </dl>
         </section>
       </div>

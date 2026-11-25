@@ -32,7 +32,7 @@ flowchart TD
 | สิทธิ์ deploy | IAM user สำหรับ bucket นี้ และ Access Key ใน GitHub Secrets |
 | ประวัติ release | Git commit SHA, โฟลเดอร์ `releases/` และ S3 Versioning |
 
-CI รันบน Pull Request แต่การบังคับให้ผ่านก่อน merge ต้องตั้ง branch protection หรือ repository ruleset เพิ่มใน GitHub
+ตั้ง branch protection ของ `main` ให้ต้องเปิด Pull Request และผ่าน check `test` ก่อน merge พร้อมบังคับให้ branch อัปเดตตาม `main`
 
 ## โครงสร้างไฟล์
 
@@ -71,7 +71,7 @@ npm start
 
 | เคส | สิ่งที่ตรวจ |
 | --- | --- |
-| หน้าแรก | HTTP 200 ชื่อเจ้าของเว็บ และหัวข้อโปรเจกต์ครบทั้งสามรายการ |
+| หน้าแรก | HTTP 200 ชื่อเจ้าของเว็บ และหัวข้อโปรเจกต์ครบทั้งสี่รายการ |
 | ลิงก์ | อีเมลและโทรศัพท์ตรงกับข้อมูลติดต่อ พร้อมตรวจรูปแบบ URL ของ GitHub repository |
 | Responsive layout | ความกว้างเนื้อหาพอดี viewport โดยไม่มี horizontal overflow |
 | ข้อมูล release | `/version.json` ระบุ commit ที่ใช้ build เลขเวอร์ชัน และวันที่ build ที่อ่านได้ |
@@ -182,7 +182,7 @@ Deploy และ rollback ใช้ concurrency group `portfolio-production` ร
 - Website endpoint ของ S3 ใช้ HTTP และไฟล์เว็บไซต์รวมถึง release ที่เปิดสิทธิ์อ่านเป็นข้อมูลสาธารณะ
 - บัญชีที่ใช้ทดลองติดเงื่อนไขตรวจสอบบัญชีก่อนสร้าง CloudFront และหน้า Identity providers ต้องเปิด Advanced features จึงใช้ IAM user กับ GitHub Secrets สำหรับ deploy
 - Pipeline รองรับชุดไฟล์ `index.html` กับ `version.json` หากเพิ่มไฟล์ CSS, JavaScript หรือรูปแยก ต้องปรับ build, deploy, rollback และการตรวจไฟล์ให้ครอบคลุม
-- Branch protection เป็นการตั้งค่าระดับ repository ที่ต้องตรวจและเปิดใช้งานเพิ่มเติม
+- ตั้ง branch protection บน `main` ให้ต้องผ่าน Pull Request และ check `test` รวมถึงอัปเดต branch ให้ทัน `main` ก่อน merge โดยบังคับใช้กับผู้ดูแลและปิด force push กับการลบ branch
 - ค่าใช้จ่ายขึ้นกับ S3 storage, requests และ data transfer รวมถึงสิทธิ์และเครดิต Free plan ของบัญชี ตรวจเครดิตใน AWS Settings หรือ Billing และจัดการประวัติ release เมื่อเลิกใช้
 
 ## เอกสารอ้างอิง
