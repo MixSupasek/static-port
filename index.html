@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เรซูเม่ | Supasek Sangket</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: 'Source Sans 3', 'Leelawadee UI', 'Segoe UI', sans-serif;
+      color: #1c2734;
+      background: #edf1f5;
+      line-height: 1.5;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+
+    .resume {
+      max-width: 210mm;
+      margin: 32px auto;
+      padding: 12mm 13mm;
+      background: white;
+      box-shadow: 0 6px 30px #102b4820;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; }
+    h2 {
+      border-bottom: 1px solid #c8d4df;
+      color: #224761;
+      font-size: 1.12rem;
+      margin-bottom: 6px;
+      padding-bottom: 3px;
+    }
+
+    h3 { font-size: 1.02rem; }
+    .resume-header { border-bottom: 2px solid #35495d; padding-bottom: 19px; }
+    .subtitle { color: #224761; font-size: 1.08rem; font-weight: 600; margin-top: 6px; }
+    .contact { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 8px; overflow-wrap: anywhere; font-size: 0.93rem; }
+    .resume-body {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .primary { padding-top: 12px; }
+    .sidebar { background: #f1f3f5; padding: 12px; }
+    section + section { margin-top: 16px; }
+    .skill-groups, .skill-groups dd { margin: 0; }
+    .skill-groups dt { font-weight: 700; }
+    .skill-groups dd + dt { margin-top: 8px; }
+    .project-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 12px; }
+    .project-summary, .credentials { margin: 6px 0 0; padding-inline-start: 1.25em; }
+    .project-summary li + li, .credentials li + li { margin-top: 4px; }
+    .project-summary + .project-heading { margin-top: 14px; }
+    a { color: #224761; text-underline-offset: 2px; }
+
+    @media screen and (max-width: 640px) {
+      .resume { margin: 0; padding: 28px clamp(18px, 6vw, 40px); box-shadow: none; }
+      .resume-body { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @page { size: A4; margin: 12mm 13mm; }
+
+    @media print {
+      :root { background: white; font-size: 10.5pt; }
+      h1 { font-size: 30pt; }
+      .resume { margin: 0; max-width: none; padding: 0; box-shadow: none; }
+      .sidebar { print-color-adjust: exact; }
+      header, section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="resume">
+    <header class="resume-header">
+      <h1>Supasek Sangket</h1>
+      <p class="subtitle">นิสิตวิศวกรรมคอมพิวเตอร์</p>
+      <p class="contact">
+        <a href="mailto:mix.supasek@gmail.com">mix.supasek@gmail.com</a>
+        <a href="tel:+66954847401">0954847401</a>
+        <a href="https://github.com/MixSupasek">github.com/MixSupasek</a>
+      </p>
+    </header>
+
+    <div class="resume-body">
+      <div class="primary">
+        <section aria-labelledby="profile">
+          <h2 id="profile">เกี่ยวกับฉัน</h2>
+          <p>นิสิตชั้นปีที่ 3 สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยเกษตรศาสตร์ สนใจฝึกงานด้าน DevOps หรือ Cloud Engineering เคยลงมือทำระบบสร้าง Docker image อัตโนมัติและนำแอปพลิเคชันขึ้น Kubernetes</p>
+        </section>
+
+        <section aria-labelledby="education">
+          <h2 id="education">การศึกษา</h2>
+          <h3>มหาวิทยาลัยเกษตรศาสตร์ บางเขน</h3>
+          <p>สาขาวิศวกรรมคอมพิวเตอร์ &middot; ชั้นปีที่ 3 &middot; เกรดเฉลี่ย 3.73</p>
+        </section>
+
+        <section aria-labelledby="projects">
+          <h2 id="projects">โครงการที่เคยพัฒนา</h2>
+          <div class="project-heading">
+            <h3>GitOps Release Pipeline</h3>
+            <a href="https://github.com/MixSupasek/gitops-release-pipeline">ดูโครงการบน GitHub</a>
+          </div>
+          <ul class="project-summary">
+            <li><strong>ภาพรวมโครงการ</strong> ระบบสาธิตการปล่อยและย้อนเวอร์ชัน Python API บน Kubernetes แบบ GitOps</li>
+            <li><strong>สิ่งที่ทำ</strong> ใช้ GitHub Actions สร้าง ทดสอบ และเผยแพร่ Docker image แล้วใช้ Argo CD ดีพลอยบน Kubernetes ในเครื่อง</li>
+            <li><strong>ทักษะที่ได้</strong> ทำ CI/CD อัตโนมัติ ตรวจสอบความพร้อมของ API และทดสอบการย้อนเวอร์ชันด้วย <code>git revert</code> พร้อมตรวจสอบผลผ่าน API</li>
+          </ul>
+
+          <div class="project-heading">
+            <h3>Bar Mai FoodHub App</h3>
+            <a href="https://github.com/tottirct/bar-mai-foodhub-app">ดูโครงการบน GitHub</a>
+          </div>
+          <ul class="project-summary">
+            <li><strong>ภาพรวมโครงการ</strong> เว็บสั่งอาหารสำหรับโรงอาหารมหาวิทยาลัย รองรับกระเป๋าเงินอิเล็กทรอนิกส์และการติดตามสถานะออเดอร์</li>
+            <li><strong>สิ่งที่ทำ</strong> รับผิดชอบส่วนฐานข้อมูลและ Docker โดยใช้ Docker Compose รัน MySQL และ MongoDB</li>
+            <li><strong>ทักษะที่ได้</strong> ทำงานกับฐานข้อมูลเชิงสัมพันธ์และฐานข้อมูลแบบเอกสาร รวมถึงตั้งค่าสภาพแวดล้อมฐานข้อมูลสำหรับพัฒนาด้วย Docker Compose</li>
+          </ul>
+
+          <div class="project-heading">
+            <h3>KUQuest</h3>
+            <a href="https://github.com/KUQuest/KUQUest-Mobile">Mobile</a>
+            <a href="https://github.com/KUQuest/KUQuest-API-Server">API Server</a>
+          </div>
+          <ul class="project-summary">
+            <li><strong>ภาพรวมโครงการ</strong> แอปสำหรับประกาศและค้นหางานหรือภารกิจภายในมหาวิทยาลัย</li>
+            <li><strong>สิ่งที่ทำ</strong> ร่วมพัฒนาฝั่งมือถือและช่วยทดสอบการทำงานเบื้องต้นของแอป</li>
+            <li><strong>ทักษะที่ได้</strong> พัฒนาแอปมือถือด้วย React Native และ Expo รวมถึงทดสอบฟังก์ชันเบื้องต้น</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="credentials">
+          <h2 id="credentials">ใบรับรองและการอบรม</h2>
+          <ul class="credentials">
+            <li>Huawei Cloud HCCDA-Cloud Native</li>
+            <li>AWS Academy Graduate - Microservices and CI/CD Pipeline Builder</li>
+            <li>AWS Academy Cloud Architecting</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="sidebar">
+        <section aria-labelledby="skills">
+          <h2 id="skills">ทักษะทางเทคนิค</h2>
+          <dl class="skill-groups">
+            <dt>ภาษาที่เขียน</dt>
+            <dd>Python, C, C++</dd>
+            <dt>เครื่องมือ</dt>
+            <dd>Git, Docker, Docker Compose, Kubernetes, GitHub Actions, Argo CD, GitHub Container Registry, MySQL, MongoDB, React Native, Expo</dd>
+            <dt>ทักษะ</dt>
+            <dd>ทำ CI/CD อัตโนมัติ, ดีพลอยแบบ GitOps, ตรวจสอบความพร้อมของ API และย้อนเวอร์ชัน, ตั้งค่าฐานข้อมูลด้วย Docker Compose, พัฒนาและทดสอบแอปมือถือเบื้องต้น</dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
