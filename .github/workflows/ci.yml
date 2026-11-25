@@ -1,4 +1,4 @@
-name: Portfolio CI
+name: Portfolio CI/CD
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   test:
@@ -46,3 +46,50 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: portfolio-production
+      cancel-in-progress: false
+    env:
+      AWS_REGION: ap-southeast-2
+      S3_BUCKET: supasek-portfolio-001-461899883996-ap-southeast-2-an
+      WEBSITE_URL: http://supasek-portfolio-001-461899883996-ap-southeast-2-an.s3-website-ap-southeast-2.amazonaws.com
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check this is the latest main revision
+        run: |
+          latest="$(git ls-remote origin refs/heads/main | cut -f1)"
+          if [ "$latest" != "$GITHUB_SHA" ]; then
+            echo 'main has moved. Use the workflow run for the latest main commit.'
+            exit 1
+          fi
+      - uses: actions/download-artifact@v5
+        with:
+          name: website-${{ github.sha }}
+          path: dist/
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Save tested release in S3
+        run: |
+          aws s3 cp dist/index.html "s3://$S3_BUCKET/releases/$GITHUB_SHA/index.html" --content-type 'text/html; charset=utf-8' --only-show-errors
+          aws s3 cp dist/version.json "s3://$S3_BUCKET/releases/$GITHUB_SHA/version.json" --content-type application/json --only-show-errors
+      - name: Publish tested release
+        run: |
+          aws s3 cp dist/index.html "s3://$S3_BUCKET/index.html" --content-type 'text/html; charset=utf-8' --cache-control no-store --only-show-errors
+          aws s3 cp dist/version.json "s3://$S3_BUCKET/version.json" --content-type application/json --cache-control no-store --only-show-errors
+      - name: Verify public website matches tested files
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --connect-timeout 10 --max-time 20 "$WEBSITE_URL/index.html" -o /tmp/deployed-index.html
+          curl --fail --silent --show-error --retry 5 --retry-all-errors --connect-timeout 10 --max-time 20 "$WEBSITE_URL/version.json" -o /tmp/deployed-version.json
+          cmp dist/index.html /tmp/deployed-index.html
+          cmp dist/version.json /tmp/deployed-version.json
+          echo "Deployed $GITHUB_SHA to $WEBSITE_URL" >> "$GITHUB_STEP_SUMMARY"
