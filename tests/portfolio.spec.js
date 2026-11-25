@@ -35,6 +35,16 @@ test('page fits the viewport without horizontal scrolling', async ({ page }) => 
   expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);
 });
 
+test('portrait loads alongside the resume heading', async ({ page }) => {
+  await page.goto('/');
+  const portrait = page.getByRole('img', { name: 'Supasek Sangket', exact: true });
+  await expect(portrait).toBeVisible();
+  expect(await portrait.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  const photoBounds = await portrait.boundingBox();
+  const nameBounds = await page.getByRole('heading', { level: 1 }).boundingBox();
+  expect(photoBounds.x).toBeGreaterThanOrEqual(nameBounds.x + nameBounds.width);
+});
+
 test('version endpoint identifies the exact source revision', async ({ request }) => {
   const response = await request.get('/version.json');
   expect(response.status()).toBe(200);
