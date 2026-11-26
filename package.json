@@ -1,6 +1,6 @@
 {
   "name": "static-port",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Static portfolio with automated browser tests and versioned build artifacts",
   "private": true,
   "scripts": {

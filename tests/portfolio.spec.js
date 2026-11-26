@@ -21,15 +21,13 @@ test('homepage serves the portfolio and all five projects', async ({ page }) => 
   }
 });
 
-test('contact and project links point to usable destinations', async ({ page }) => {
+test('contact links remain usable and projects have no links', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'mix.supasek@gmail.com' }))
     .toHaveAttribute('href', 'mailto:mix.supasek@gmail.com');
   await expect(page.getByRole('link', { name: '0954847401' }))
     .toHaveAttribute('href', 'tel:+66954847401');
-  await expect(page.getByRole('link', { name: 'Presentation', exact: true }))
-    .toHaveAttribute('href', 'https://www.youtube.com/watch?v=aACfBl-uUSw');
-  const projectLinks = page.locator('.project-heading a[href^="https://github.com/"]');
+  const projectLinks = page.locator('section[aria-labelledby="projects"] a');
   await expect(projectLinks).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'github.com/MixSupasek', exact: true }))
     .toHaveAttribute('href', 'https://github.com/MixSupasek');
