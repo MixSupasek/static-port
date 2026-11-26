@@ -50,6 +50,8 @@
 
     .resume-body > section { border-top: 1px solid #111; padding-top: 10px; }
     section + section { margin-top: 12px; }
+    .education-heading { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0 12px; }
+    .education-heading + p + .education-heading { margin-top: 6px; }
     .skill-categories { margin: 0; padding-inline-start: 1.2em; }
     .skill-categories li + li { margin-top: 4px; }
     .project-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 12px; }
@@ -107,8 +109,16 @@
 
       <section aria-labelledby="education">
         <h2 id="education">Education</h2>
-        <h3>Kasetsart University, Bangkhen Campus</h3>
+        <div class="education-heading">
+          <h3>Kasetsart University, Bangkhen Campus</h3>
+          <span>2024–2028</span>
+        </div>
         <p>Computer Engineering &middot; Third-year student &middot; GPA 3.73</p>
+        <div class="education-heading">
+          <h3>Assumption Samutprakarn</h3>
+          <span>2016–2024</span>
+        </div>
+        <p>Engineering Program</p>
       </section>
 
       <section aria-labelledby="skills">
