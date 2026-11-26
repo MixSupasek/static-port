@@ -8,6 +8,9 @@ test('homepage serves the portfolio and all five projects', async ({ page }) => 
   await expect(page.getByRole('heading', { level: 1, name: 'Supasek Sangket' })).toBeVisible();
   await expect(page.getByText('Thai — Native', { exact: true })).toBeVisible();
   await expect(page.getByText('English — Intermediate', { exact: true })).toBeVisible();
+  await expect(page.locator('.credentials li')).toHaveCount(3);
+  await expect(page.getByText('AWS Academy Graduate - Cloud Architecting', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('AWS Academy Graduate - Microservices and CI/CD Pipeline Builder', { exact: true })).toHaveCount(1);
   for (const name of ['Static Website CI/CD on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest', 'Football Player Market Value Data Warehouse']) {
     await expect(page.getByRole('heading', { level: 3, name, exact: true })).toBeVisible();
   }
@@ -22,13 +25,9 @@ test('contact and project links point to usable destinations', async ({ page }) 
   await expect(page.getByRole('link', { name: 'Presentation', exact: true }))
     .toHaveAttribute('href', 'https://www.youtube.com/watch?v=aACfBl-uUSw');
   const projectLinks = page.locator('.project-heading a[href^="https://github.com/"]');
-  await expect(projectLinks).toHaveCount(5);
-  for (const link of await projectLinks.all()) {
-    const destination = new URL(await link.getAttribute('href'));
-    expect(destination.protocol).toBe('https:');
-    expect(destination.hostname).toBe('github.com');
-    expect(destination.pathname.split('/').filter(Boolean).length).toBe(2);
-  }
+  await expect(projectLinks).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'github.com/MixSupasek', exact: true }))
+    .toHaveAttribute('href', 'https://github.com/MixSupasek');
 });
 
 test('page fits the viewport without horizontal scrolling', async ({ page }) => {
