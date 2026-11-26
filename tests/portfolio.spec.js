@@ -11,8 +11,13 @@ test('homepage serves the portfolio and all five projects', async ({ page }) => 
   await expect(page.locator('.credentials li')).toHaveCount(3);
   await expect(page.getByText('AWS Academy Graduate - Cloud Architecting', { exact: true })).toHaveCount(1);
   await expect(page.getByText('AWS Academy Graduate - Microservices and CI/CD Pipeline Builder', { exact: true })).toHaveCount(1);
-  for (const name of ['Static Website CI/CD on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest', 'Football Player Market Value Data Warehouse']) {
+  for (const name of ['Personal Portfolio Website on AWS S3', 'GitOps Release Pipeline', 'Bar Mai FoodHub App', 'KUQuest', 'Football Player Market Value Data Warehouse']) {
     await expect(page.getByRole('heading', { level: 3, name, exact: true })).toBeVisible();
+  }
+  await expect(page.locator('.project-summary')).toHaveCount(5);
+  for (const project of await page.locator('.project-summary').all()) {
+    await expect(project.locator('li')).toHaveCount(2);
+    await expect(project.locator('strong')).toHaveCount(0);
   }
 });
 
