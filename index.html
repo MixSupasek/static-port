@@ -50,11 +50,8 @@
 
     .resume-body > section { border-top: 1px solid #111; padding-top: 10px; }
     section + section { margin-top: 12px; }
-    .skill-groups { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 10px; margin: 0; }
-    .skill-groups dd { margin: 0; }
-    .skill-groups dt { font-weight: 700; }
-    .skill-list { margin: 0; padding-inline-start: 1.2em; }
-    .skill-list li + li { margin-top: 2px; }
+    .skill-categories { margin: 0; padding-inline-start: 1.2em; }
+    .skill-categories li + li { margin-top: 4px; }
     .project-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 12px; }
     .project-summary, .credentials, .spoken-languages { margin: 6px 0 0; padding-inline-start: 1.25em; }
     .project-summary li + li, .credentials li + li, .spoken-languages li + li { margin-top: 4px; }
@@ -81,8 +78,7 @@
       section + section { margin-top: 4px; }
       .project-summary + .project-heading { margin-top: 4px; }
       .project-summary li + li, .credentials li + li, .spoken-languages li + li { margin-top: 1px; }
-      .skill-list li + li { margin-top: 0; }
-      .skill-groups { row-gap: 2px; }
+      .skill-categories li + li { margin-top: 1px; }
       .spoken-languages { display: flex; flex-wrap: wrap; gap: 0 24px; }
       header, section { break-inside: avoid; }
     }
@@ -117,30 +113,18 @@
 
       <section aria-labelledby="skills">
         <h2 id="skills">Technical Skills</h2>
-        <dl class="skill-groups">
-          <dt>Programming</dt>
-          <dd>Python, C, C++</dd>
-          <dt>Tools</dt>
-            <dd>
-              <ul class="skill-list">
-                <li>Git, GitHub Actions, GitHub Container Registry, Argo CD</li>
-                <li>AWS S3, AWS IAM, AWS CLI</li>
-                <li>Docker, Docker Compose, Kubernetes</li>
-                <li>MySQL, MongoDB, Jupyter Notebook, RapidMiner, Power BI</li>
-                <li>React Native, Expo, Playwright</li>
-              </ul>
-            </dd>
-          <dt>Skills</dt>
-            <dd>
-              <ul class="skill-list">
-                <li>CI/CD, automated testing and GitOps deployments</li>
-                <li>AWS S3 hosting, IAM permissions and GitHub Secrets</li>
-                <li>Release versioning, rollback, branch protection and API health checks</li>
-                <li>Database setup with Docker Compose, basic mobile development and testing</li>
-                <li>ETL, Star Schema design, exploratory data analysis (EDA) and dashboard development</li>
-              </ul>
-            </dd>
-        </dl>
+        <ul class="skill-categories">
+          <li><strong>Cloud</strong> — AWS (EC2, S3, IAM, CloudFront, ECS, ECR), Huawei Cloud</li>
+          <li><strong>Containers</strong> — Docker, Docker Compose, Kubernetes</li>
+          <li><strong>CI/CD &amp; Automation</strong> — GitHub Actions, Argo CD, AWS CodePipeline, CodeDeploy, GitOps, release versioning and rollback, GitHub Secrets, branch protection</li>
+          <li><strong>Infrastructure as Code</strong> — AWS CloudFormation</li>
+          <li><strong>Networking &amp; Monitoring</strong> — VPC, security groups, Route 53, load balancing, Auto Scaling, CloudWatch</li>
+          <li><strong>Databases</strong> — MySQL, MongoDB, Amazon RDS, DynamoDB</li>
+          <li><strong>Data &amp; Analytics</strong> — ETL, Star Schema design, EDA, Jupyter Notebook, RapidMiner, Power BI, dashboard development</li>
+          <li><strong>Testing &amp; Mobile</strong> — Playwright, automated testing, API health checks, React Native, Expo</li>
+          <li><strong>Developer Tools</strong> — Git, GitHub Container Registry, AWS CLI</li>
+          <li><strong>Programming Languages</strong> — Python, C, C++</li>
+        </ul>
       </section>
 
       <section aria-labelledby="projects">
